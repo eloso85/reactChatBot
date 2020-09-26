@@ -1,26 +1,54 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+
+import {useAuthState} from 'react-firebase-hooks/auth';
+import {useCollectionData} from 'react-firebase-hooks/firestore';
+
+firebase.initializeApp({
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: "chatbot-452c4.firebaseapp.com",
+  databaseURL: "https://chatbot-452c4.firebaseio.com",
+  projectId: "chatbot-452c4",
+  storageBucket: "chatbot-452c4.appspot.com",
+  messagingSenderId: "945391478231",
+  appId: "1:945391478231:web:fc0bca8cf9283f629d9792",
+  measurementId: "G-FSKNQDT6NS"
+  
+})
+
+const auth = firebase.auth();
+const firestore = firebase.firestore();
+
 function App() {
+
+const [] = useAuthState(auth);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+       
       </header>
+      <h1>⚛️🔥💬</h1>
+        <section>
+          {user ? < ChatRoom/> : <SignIn/>}
+        </section>
+
     </div>
   );
+}
+
+function SignIn(){
+  const signInWithGoogle = () =>{
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  }
+  return (
+    <button onClick={signInWithGoogle}>Sign in with Google</button>
+  )
 }
 
 export default App;
