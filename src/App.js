@@ -25,7 +25,7 @@ const firestore = firebase.firestore();
 
 function App() {
 
-const [] = useAuthState(auth);
+const [user] = useAuthState(auth);
 
   return (
     <div className="App">
@@ -49,6 +49,19 @@ function SignIn(){
   return (
     <button onClick={signInWithGoogle}>Sign in with Google</button>
   )
+}
+
+function SignOut(){
+  return auth.currentUser && (
+    <button onClick={() => auth.signOut()}>Sign Out</button>
+  )
+}
+
+function ChatRoom(){
+  const messageRef = firestore.collection('messages');
+  const query =  messageRef.orderBy('createdAt').limit(25);
+
+  const[messages] = useCollectionData(query,{idField:'id'});
 }
 
 export default App;
