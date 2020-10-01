@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 import firebase from 'firebase/app';
@@ -29,10 +29,10 @@ const [user] = useAuthState(auth);
 
   return (
     <div className="App">
-      <header className="App-header">
-       
-      </header>
+      <header >
       <h1>⚛️🔥💬</h1>
+      </header>
+      
         <section>
           {user ? < ChatRoom/> : <SignIn/>}
         </section>
@@ -62,6 +62,32 @@ function ChatRoom(){
   const query =  messageRef.orderBy('createdAt').limit(25);
 
   const[messages] = useCollectionData(query,{idField:'id'});
+
+  const [formValue , setFormValue] = useState('');
+  
+  return(<>
+  <main>
+      <div>
+        {messages && messages.map(msg=> <ChatMessage key={msg.id} message={msg}/>)}
+      </div>
+      <form>
+        <input value={formValue} onChange={(e)=> setFormValue(e.target.value)}/>
+        <button type="submit">🕊️</button>
+      </form>
+  </main>
+  </>)
+}
+
+function ChatMessage(props){
+  const {text, uid} = props.message;
+  const messageClass = uid === auth.currentUser.uid ? 'sent': 'received';
+
+  return(
+    <div className={`message ${messageClass}`}>
+      <img src={photoUrl}/>
+      <p>{text}</p>
+    </div>
+  )
 }
 
 export default App;
