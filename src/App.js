@@ -10,7 +10,7 @@ import {useCollectionData} from 'react-firebase-hooks/firestore';
 //
 //hello
 firebase.initializeApp({
-  apiKey: process.env.REACT_APP_API_KEY,
+  apiKey: "AIzaSyAV111wLT84byEHPFoIwBSrV5Yny7T9Hb0",
   authDomain: "chatbot-452c4.firebaseapp.com",
   databaseURL: "https://chatbot-452c4.firebaseio.com",
   projectId: "chatbot-452c4",
